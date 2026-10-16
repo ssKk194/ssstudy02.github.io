@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudyVault — Premium Learning Portal</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#F59E0B" />
+  <link rel="apple-touch-icon" href="https://api.iconify.design/mdi/school-outline.svg?color=%23F59E0B&width=192&height=192">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Pacifico&family=Dancing+Script:wght@400;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script>
+    window.addEventListener('error', function(e) {
+      console.error(e);
+    });
+    window.addEventListener('unhandledrejection', function(e) {
+      console.error(e.reason);
+    });
+  </script>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    if (window.pdfjsLib) {
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+  </script>
+</head>
+<body>
+
+  <!-- Top Page Turbo Progress Bar -->
+  <div class="page-turbo-bar" id="page-turbo-bar"></div>
+
+  <!-- Ambient Background Orbs for Glassmorphism -->
+  <div class="ambient-orb orb-1"></div>
+  <div class="ambient-orb orb-2"></div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar" class="navbar" role="navigation">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo" id="nav-logo-link">
+        <div class="logo-icon">SV</div>
+        <span>StudyVault</span>
+      </a>
+
+      <ul class="nav-links" id="nav-links-container">
+        <div class="nav-liquid-bg" id="nav-liquid-bg"></div>
+        <li><a href="#" class="nav-link active" data-page="home">
+          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span class="nav-text">Home</span>
+        </a></li>
+        <li><a href="#" class="nav-link" data-page="notes">
+          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          <span class="nav-text">Notes</span>
+        </a></li>
+        <li><a href="#" class="nav-link" data-page="exams">
+          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+          <span class="nav-text">Exams</span>
+        </a></li>
+        <li><a href="#" class="nav-link" data-page="notices">
+          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span class="nav-text">Notices</span>
+        </a></li>
+        <li><a href="#" class="nav-link" data-page="daily">
+          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+          <span class="nav-text">Daily Quiz &amp; DSA</span>
+        </a></li>
+        <li><a href="#" class="nav-link nav-premium" data-page="premium">
+          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <span class="nav-text">Premium</span>
+        </a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <div class="user-badge" id="user-badge" onclick="navigateTo('settings')" style="cursor: pointer;" title="Open Settings">
+          <div class="user-avatar" id="user-avatar-char">?</div>
+          <span class="user-name" id="user-name-text">Loading...</span>
+        </div>
+        <button class="admin-only btn-secondary" id="admin-panel-btn" onclick="openAdminPanel('notes')">+ Upload</button>
+        <button class="admin-only" id="admin-notif-bell" onclick="openAdminPanel('approvals')" style="background: none; border: none; cursor: pointer; position: relative; color: var(--text-2); padding: 8px; align-items: center; justify-content: center; transition: color 0.2s;" onmouseover="this.style.color='var(--text-1)'" onmouseout="this.style.color='var(--text-2)'">
+          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span id="admin-notif-badge" class="hidden" style="position: absolute; top: 0px; right: 0px; background: red; color: white; border-radius: 50%; padding: 2px 5px; font-size: 0.65rem; font-weight: bold; border: 2px solid var(--bg);">0</span>
+        </button>
+        <button class="btn-secondary" id="sign-out-btn">Sign Out</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="container">
+
+    <!-- HOME PAGE -->
+    <section class="page-section active" id="home">
+      <!-- Top Luminous Live Bar -->
+      <div class="home-top-status reveal-up">
+        <div class="live-pill">
+          <span class="live-dot pulse"></span>
+          <span class="live-pill-text">ACADEMIC HUB LIVE</span>
+        </div>
+        <div class="portal-date-pill" id="portal-live-clock">
+          <svg class="clock-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          <span id="portal-current-time">Connecting to portal...</span>
+        </div>
+        <div class="portal-security-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:middle; margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <span>End-to-End Encrypted Portal</span>
+        </div>
+      </div>
+
+      <!-- Home Dashboard Layout -->
+      <div class="home-dashboard">
+        
+        <!-- Left: Hero + Dynamic Study Command Center -->
+        <div class="home-main">
+          
+          <!-- Masterclass Hero Banner -->
+          <div class="premium-hero reveal-up delay-1">
+            <div class="hero-bg-glow"></div>
+            <div class="hero-visual-area">
+              <div class="hero-massive-bg">STUDY</div>
+            </div>
+            
+            <div class="hero-content">
+              <div class="premium-badge-wrapper">
+                <span class="premium-badge">
+                  <span class="badge-dot"></span> The Ultimate Engineering Workspace
+                </span>
+                <span class="premium-edition-tag">v2.5 ARCHITECTURE</span>
+              </div>
+              
+              <h2 class="stylish-greeting" id="hero-greeting">
+                Welcome back, <br/>
+                <span class="curvy-name gradient-colorful" id="hero-name">Student</span>
+              </h2>
+              
+              <h1 class="premium-title">Master your <br/><span class="text-gradient-gold">Curriculum.</span></h1>
+              <p class="premium-desc">StudyVault is your high-end academic hub for conquering core subjects, accessing elite study materials, and tracking your success.</p>
+              
+              <!-- Quick Stats Counter Row -->
+              <div class="hero-metrics-strip">
+                <div class="metric-block" onclick="navigateTo('notes')">
+                  <span class="metric-num">10+</span>
+                  <span class="metric-label">Core Subjects</span>
+                </div>
+                <div class="metric-divider"></div>
+                <div class="metric-block" onclick="navigateTo('exams')">
+                  <span class="metric-num">Live</span>
+                  <span class="metric-label">Timed Exams</span>
+                </div>
+                <div class="metric-divider"></div>
+                <div class="metric-block" onclick="navigateTo('daily')">
+                  <span class="metric-num">Daily</span>
+                  <span class="metric-label">DSA Challenges</span>
+                </div>
+                <div class="metric-divider"></div>
+                <div class="metric-block" onclick="navigateTo('notices')">
+                  <span class="metric-num">Instant</span>
+                  <span class="metric-label">Notice Board</span>
+                </div>
+              </div>
+
+              <!-- Action Buttons with Ambient Light -->
+              <div class="premium-hero-actions">
+                <button class="btn-premium" onclick="navigateTo('notes')">
+                  <span class="btn-shine"></span>
+                  <span>Explore Materials</span>
+                  <span class="arrow">→</span>
+                </button>
+                <button class="btn-secondary hero-alt-btn" onclick="navigateTo('exams')">
+                  <span>Take Live Exam</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Subject Shortcuts Bar (Keep Study Intact & Faster Access) -->
+          <div class="home-quick-strip reveal-up delay-2">
+            <div class="strip-header">
+              <span class="strip-title">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:middle; margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                Quick Subject Vault
+              </span>
+              <span class="strip-subtitle">Instant 1-Click Access</span>
+            </div>
+            <div class="quick-subject-tags">
+              <button class="subject-pill" onclick="navigateTo('notes'); selectNoteSubject('dsa');">
+                <span class="subj-indicator" style="background:#f59e0b;"></span> Data Structures
+              </button>
+              <button class="subject-pill" onclick="navigateTo('notes'); selectNoteSubject('cn');">
+                <span class="subj-indicator" style="background:#3b82f6;"></span> Networks (CN)
+              </button>
+              <button class="subject-pill" onclick="navigateTo('notes'); selectNoteSubject('os');">
+                <span class="subj-indicator" style="background:#10b981;"></span> Operating Systems
+              </button>
+              <button class="subject-pill" onclick="navigateTo('notes'); selectNoteSubject('coa');">
+                <span class="subj-indicator" style="background:#8b5cf6;"></span> Architecture (COA)
+              </button>
+              <button class="subject-pill" onclick="navigateTo('notes'); selectNoteSubject('se');">
+                <span class="subj-indicator" style="background:#ec4899;"></span> Software Engg
+              </button>
+              <button class="subject-pill" onclick="navigateTo('notes'); selectNoteSubject('vm');">
+                <span class="subj-indicator" style="background:#6366f1;"></span> Vedic Math
+              </button>
+            </div>
+          </div>
+
+          <!-- Dynamic 3-Column Command Deck -->
+          <div class="home-deck-grid">
+            <div class="dash-card reveal-up delay-1" id="dash-exam-card">
+              <div class="dash-card-header">
+                <div class="dash-icon-circle exam-glow">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                </div>
+                <div>
+                  <h3 class="dash-title">Next Upcoming Exam</h3>
+                  <span class="dash-subtext">Live Scheduled Paper</span>
+                </div>
+              </div>
+              <div id="dash-exam-content" class="dash-content-area">Loading...</div>
+            </div>
+
+            <div class="dash-card reveal-up delay-2" id="dash-notice-card">
+              <div class="dash-card-header">
+                <div class="dash-icon-circle notice-glow">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                </div>
+                <div>
+                  <h3 class="dash-title">Latest Notice</h3>
+                  <span class="dash-subtext">Verified Department Post</span>
+                </div>
+              </div>
+              <div id="dash-notice-content" class="dash-content-area">Loading...</div>
+            </div>
+
+            <div class="dash-card reveal-up delay-3 highlight-daily-card" id="dash-daily-card">
+              <div class="dash-card-header">
+                <div class="dash-icon-circle daily-glow">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                </div>
+                <div style="flex:1;">
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h3 class="dash-title">Daily Challenge</h3>
+                    <span class="live-tag">LIVE</span>
+                  </div>
+                  <span class="dash-subtext">DSA &amp; Problem Solving</span>
+                </div>
+              </div>
+              <div id="dash-daily-content" class="dash-content-area">Loading...</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Right: Holographic ID Card & Profile Deck -->
+        <div class="home-sidebar reveal-up delay-3">
+          <div class="id-card-wrapper">
+            <div class="id-card-sheen"></div>
+            <div class="id-card">
+              <div class="id-chip">
+                <span class="chip-line"></span>
+                <span class="chip-line"></span>
+                <span class="chip-line"></span>
+              </div>
+              <div class="id-brand">
+                <span class="id-brand-logo">SV</span>
+                <span class="id-brand-text">STUDYVAULT ACADEMIC ID</span>
+              </div>
+              <div class="id-avatar" id="home-id-avatar">?</div>
+              <h3 class="id-name" id="home-id-name">Student Name</h3>
+              <p class="id-role">Verified Scholar</p>
+              
+              <div class="id-signature-area">
+                <img src="" alt="" class="id-signature-img hidden" id="home-id-signature">
+                <div class="id-signature-placeholder" id="home-id-signature-ph">Official Signature</div>
+              </div>
+              <div class="id-footer" id="home-id-number">Generating ID...</div>
+            </div>
+          </div>
+
+          <!-- Account Security & Membership Card -->
+          <div class="user-details-card">
+            <div class="details-top">
+              <h4 class="details-heading">Account Credential</h4>
+              <span class="credential-shield">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:middle; margin-right:3px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                Verified
+              </span>
+            </div>
+            
+            <div class="detail-row">
+              <span class="detail-label">Email Account</span>
+              <span class="detail-value" id="home-detail-email">student@example.com</span>
+            </div>
+            
+            <div class="detail-row">
+              <span class="detail-label">Status</span>
+              <span class="detail-value">
+                <span class="status-dot"></span> Active Session
+              </span>
+            </div>
+            
+            <div class="detail-row">
+              <span class="detail-label">Membership Tier</span>
+              <span class="detail-value" id="home-detail-tier" style="color: var(--accent); font-weight: 800;">Loading...</span>
+            </div>
+
+            <div class="details-action-box">
+              <button class="upgrade-btn-subtle" onclick="navigateTo('premium')">
+                <span>Manage Plan / Upgrade</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Study Tip / Motivation Widget -->
+          <div class="study-pulse-widget">
+            <div class="pulse-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            </div>
+            <div class="pulse-content">
+              <strong>Daily Focus Tip</strong>
+              <p>Practice 25 minutes of active recall on core topics today.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      
+      <!-- 5 Day Warning Exam Alerts -->
+      <div id="home-alerts" style="margin-top: 36px;"></div>
+    </section>
+
+    <!-- NOTES PAGE -->
+    <section class="page-section" id="notes">
+      <div class="section-header reveal-up">
+        <div>
+          <h2 class="section-title">Subject Notes &amp; Syllabus</h2>
+          <p class="section-desc">Select any subject to view syllabus materials and lecture notes.</p>
+        </div>
+        <div class="filters-wrap">
+          <button class="filter-tab active" data-filter="all">All Subjects</button>
+          <button class="filter-tab" data-filter="dsa">DSA</button>
+          <button class="filter-tab" data-filter="cn">Computer Networks</button>
+          <button class="filter-tab" data-filter="coa">COA</button>
+          <button class="filter-tab" data-filter="vm">Vedic Math</button>
+          <button class="filter-tab" data-filter="os">OS</button>
+          <button class="filter-tab" data-filter="se">Software Engg</button>
+          <button class="filter-tab" data-filter="ap">Applied Physics</button>
+          <button class="filter-tab" data-filter="m1">Math 1</button>
+          <button class="filter-tab" data-filter="m2">Math 2</button>
+          <button class="filter-tab" data-filter="evs">EVS</button>
+        </div>
+      </div>
+      <div class="subject-row-list" id="notes-grid"></div>
+    </section>
+
+    <!-- SUBJECT DETAIL MODAL (SYLLABUS & NOTES) -->
+    <div class="modal hidden" id="subject-detail-modal" style="position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:3600; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(8px);">
+      <div class="subject-modal-box">
+        <div class="subject-modal-header">
+          <div class="subject-modal-info">
+            <div class="subject-icon-box" id="modal-subject-icon"></div>
+            <div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span class="subject-modal-code" id="modal-subject-code">SV-DSA</span>
+                <span class="subject-count-pill" id="modal-subject-count">0 Docs</span>
+              </div>
+              <h3 class="subject-modal-title" id="modal-subject-title">Subject Name</h3>
+            </div>
+          </div>
+          <button class="admin-close-btn" onclick="closeSubjectModal()" aria-label="Close">&times;</button>
+        </div>
+
+        <div class="subject-modal-body">
+          <!-- Subsection 1: Syllabus -->
+          <div class="subject-subsection-block">
+            <div class="subject-subsection-header">
+              <h4 class="subject-subsection-title title-syllabus">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                Syllabus &amp; Curriculum
+              </h4>
+              <span class="subject-sub-badge" id="modal-syllabus-badge">0 files</span>
+            </div>
+            <div class="subject-item-list" id="modal-syllabus-list"></div>
+          </div>
+
+          <!-- Subsection 2: Notes -->
+          <div class="subject-subsection-block">
+            <div class="subject-subsection-header">
+              <h4 class="subject-subsection-title title-notes">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                Lecture Notes &amp; Units
+              </h4>
+              <span class="subject-sub-badge" id="modal-notes-badge">0 files</span>
+            </div>
+            <div class="subject-item-list" id="modal-notes-list"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXAMS PAGE -->
+    <section class="page-section" id="exams">
+      <div class="section-header reveal-up">
+        <div>
+          <h2 class="section-title">Exam Papers</h2>
+          <p class="section-desc">Mock tests, previous year papers, and live timed exams.</p>
+        </div>
+        <div class="filters-wrap">
+          <button class="exam-cat-btn filter-tab active" data-cat="all">All</button>
+          <button class="exam-cat-btn filter-tab" data-cat="mock">Mock Tests</button>
+          <button class="exam-cat-btn filter-tab" data-cat="prev">Previous Papers</button>
+          <button class="exam-cat-btn filter-tab" data-cat="assign">Assignments</button>
+        </div>
+      </div>
+      <div class="card-grid" id="exam-grid"></div>
+    </section>
+
+    <!-- NOTICES PAGE -->
+    <section class="page-section" id="notices">
+      <div class="section-header reveal-up">
+        <div>
+          <h2 class="section-title">Notice Board</h2>
+          <p class="section-desc">Important announcements, deadlines, and resources.</p>
+        </div>
+        <div class="filters-wrap" id="notice-date-filters">
+          <button class="filter-tab active" data-date="all">All Dates</button>
+        </div>
+      </div>
+      <div class="notices-list" id="notices-list"></div>
+    </section>
+
+    <!-- DAILY CHALLENGES & BRAINSTORMING (DSA & QUIZ) PAGE -->
+    <section class="page-section" id="daily">
+      <div class="section-header reveal-up">
+        <div>
+          <h2 class="section-title">Daily DSA &amp; Coding Quizzes</h2>
+          <p class="section-desc">Sharpen your analytical problem solving skills every day with live DSA challenges, algorithm puzzles, and rapid questions.</p>
+        </div>
+        <div class="filters-wrap">
+          <button class="daily-filter-tab filter-tab active" data-type="all">All</button>
+          <button class="daily-filter-tab filter-tab" data-type="dsa">DSA Coding</button>
+          <button class="daily-filter-tab filter-tab" data-type="quiz">Quiz / MCQ</button>
+          <button class="daily-filter-tab filter-tab" data-type="brainstorm">Brainstorming</button>
+        </div>
+      </div>
+
+      <!-- Challenge Grid -->
+      <div class="card-grid" id="daily-challenges-grid"></div>
+    </section>
+
+    <!-- PREMIUM PAGE -->
+    <section class="page-section" id="premium">
+      <div class="section-header reveal-up">
+        <div style="text-align: center; width: 100%;">
+          <h2 class="section-title">Upgrade Your Learning</h2>
+          <p class="section-desc" style="max-width: 600px; margin: 0 auto;">Unlock advanced features, priority support, and exclusive study materials.</p>
+        </div>
+      </div>
+      
+      <div class="pricing-grid reveal-up delay-1">
+        <!-- Lite Tier -->
+        <div class="pricing-card lite">
+          <h3 class="pricing-name">Lite Version</h3>
+          <div class="pricing-price">Rs 99<span class="period">/mo</span></div>
+          <p class="pricing-desc">Essential tools for the dedicated student.</p>
+          <ul class="pricing-features">
+            <li>✔ Access to all basic notes</li>
+            <li>✔ Unlimited Mock Exams</li>
+            <li>✔ Standard AI Tutor</li>
+            <li>✔ Community Forums</li>
+          </ul>
+          <button id="sub-btn-lite" class="btn-secondary" style="width:100%; margin-top:24px; padding:12px; font-size:1rem;" onclick="startSubscription('lite')">Subscribe to Lite</button>
+        </div>
+
+        <!-- Pro Tier -->
+        <div class="pricing-card pro">
+          <div class="popular-badge">Most Popular</div>
+          <h3 class="pricing-name">Pro Version</h3>
+          <div class="pricing-price">Rs 199<span class="period">/mo</span></div>
+          <p class="pricing-desc">The ultimate advantage for top grades.</p>
+          <ul class="pricing-features">
+            <li>✔ Everything in Lite</li>
+            <li>✔ Exclusive VIP Notes & Summaries</li>
+            <li>✔ God-Mode AI Tutor (GPT-4 / Flash)</li>
+            <li>✔ Detailed Analytics & Tracking</li>
+            <li>✔ 1-on-1 Mentorship Sessions</li>
+          </ul>
+          <button id="sub-btn-pro" class="btn-premium" style="width:100%; margin-top:24px; padding:12px; font-size:1rem;" onclick="startSubscription('pro')">Subscribe to Pro</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SETTINGS PAGE -->
+    <section class="page-section" id="settings">
+      <div class="section-header reveal-up">
+        <div>
+          <h2 class="section-title">Account Settings</h2>
+          <p class="section-desc">Manage your profile, preferences, and security.</p>
+        </div>
+      </div>
+      
+      <div class="settings-layout reveal-up delay-1">
+        <!-- Settings Sidebar -->
+        <div class="settings-sidebar">
+          <button class="settings-tab-btn active" data-tab="general" onclick="switchSettingsTab('general')">General</button>
+          <button class="settings-tab-btn" data-tab="profile" onclick="switchSettingsTab('profile')">Profile</button>
+          <button class="settings-tab-btn" data-tab="membership" onclick="switchSettingsTab('membership')">Membership</button>
+          <button class="settings-tab-btn" data-tab="security" onclick="switchSettingsTab('security')">Privacy & Security</button>
+          <button class="settings-tab-btn" data-tab="notifications" onclick="switchSettingsTab('notifications')">Notifications</button>
+        </div>
+        
+        <!-- Settings Content -->
+        <div class="settings-content">
+          <!-- Membership -->
+          <div class="settings-panel" data-panel="membership">
+            <h3 class="settings-panel-title">Membership & Billing</h3>
+            
+            <div class="setting-item" style="flex-direction: column; align-items: flex-start; gap: 16px;">
+              <div class="setting-info" style="width: 100%;">
+                <h4>Current Plan</h4>
+                <p id="settings-current-plan" style="font-size: 1.1rem; font-weight: 700; color: var(--accent); margin-top: 8px;">Free Access</p>
+                <p id="settings-plan-expiry" style="font-size: 0.85rem; color: var(--text-3); margin-top: 4px;">Never expires</p>
+              </div>
+              
+              <div id="cancel-sub-box" class="hidden" style="width: 100%; background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); padding: 16px; border-radius: 8px;">
+                <h4 style="color: #EF4444; margin-bottom: 8px;">Cancel Subscription</h4>
+                <p style="font-size: 0.85rem; color: var(--text-2); margin-bottom: 12px;">Canceling your subscription will downgrade your account back to Free. You will receive a prorated refund of <strong id="refund-amount">Rs 0</strong>.</p>
+                <div style="margin-bottom: 16px;">
+                  <label style="display: block; font-size: 0.8rem; color: var(--text-1); margin-bottom: 6px; font-weight: bold;">Enter your UPI ID for Refund</label>
+                  <input type="text" id="refund-upi-id" class="admin-input" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text-1);" placeholder="e.g. yourname@upi" />
+                </div>
+                <button class="btn-secondary" style="border-color: #EF4444; color: #EF4444; width: 100%;" onclick="requestCancellation()">Request Cancellation & Refund</button>
+              </div>
+
+              <div id="refund-status-box" class="hidden" style="width: 100%; background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2); padding: 16px; border-radius: 8px;">
+                <h4 style="color: #10B981; margin-bottom: 8px;">Refund Processed</h4>
+                <p style="font-size: 0.85rem; color: var(--text-2);">Your recent cancellation was approved. The refund was sent to your UPI.</p>
+                <p style="font-size: 0.9rem; color: var(--text-1); margin-top: 8px;"><strong>Transaction ID / UTR:</strong> <span id="refund-utr-display"></span></p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- General -->
+          <div class="settings-panel active" data-panel="general">
+            <h3 class="settings-panel-title">General Preferences</h3>
+            
+            <div class="setting-item">
+              <div class="setting-info">
+                <h4>Dark Mode</h4>
+                <p>Toggle between light and dark themes for the portal.</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="theme-toggle" onchange="toggleTheme()">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            
+            <div class="setting-item">
+              <div class="setting-info">
+                <h4>Reduce Animations</h4>
+                <p>Disable hover effects and page transitions for faster performance.</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="anim-toggle">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <h4>Compact View</h4>
+                <p>Decrease spacing in lists and grids to see more content at once.</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="compact-toggle">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <h4>Tactile Click Haptics &amp; Sound</h4>
+                <p>Play a satisfying subtle mechanical click sound and ripple on tap.</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="tactile-sound-toggle" checked onchange="toggleTactileSound(this.checked)">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+          
+          <!-- Profile -->
+          <div class="settings-panel" data-panel="profile">
+            <h3 class="settings-panel-title">Profile Information</h3>
+            <div class="setting-profile-upload">
+              <div class="avatar-large" id="settings-avatar-preview">?</div>
+              <div class="upload-controls">
+                <label class="btn-secondary" style="cursor:pointer; display:inline-block;">
+                  Upload Photo
+                  <input type="file" id="profile-pic-upload" accept="image/*" style="display:none;" onchange="updateProfilePic(event)">
+                </label>
+                <p class="upload-hint">JPEG or PNG under 2MB.</p>
+              </div>
+            </div>
+
+            <div class="setting-profile-upload" style="margin-top: 20px;">
+              <div class="signature-preview" id="settings-sig-preview">No Signature</div>
+              <div class="upload-controls">
+                <label class="btn-secondary" style="cursor:pointer; display:inline-block;">
+                  Upload Signature
+                  <input type="file" id="profile-sig-upload" accept="image/*" style="display:none;" onchange="updateSignaturePic(event)">
+                </label>
+                <p class="upload-hint">Transparent PNG works best.</p>
+              </div>
+            </div>
+            
+            <div class="admin-form-group" style="margin-top: 24px;">
+              <label class="admin-label">Display Name</label>
+              <input type="text" class="admin-input" id="profile-name" placeholder="Enter your full name">
+            </div>
+            <div class="admin-form-group">
+              <label class="admin-label">Short Bio</label>
+              <textarea class="admin-input" id="profile-bio" rows="3" placeholder="Tell us about yourself..."></textarea>
+            </div>
+            <button class="admin-submit-btn" style="width: auto; padding: 12px 24px;" onclick="saveProfile()">Save Changes</button>
+          </div>
+          
+          <!-- Security -->
+          <div class="settings-panel" data-panel="security">
+            <h3 class="settings-panel-title">Privacy & Security</h3>
+            
+            <div class="setting-item">
+              <div class="setting-info">
+                <h4>Two-Factor Authentication (2FA)</h4>
+                <p>Require an extra security code when logging in.</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            
+            <div class="setting-item">
+              <div class="setting-info">
+                <h4>Public Profile</h4>
+                <p>Allow other students to see your display name and bio.</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-info">
+                <h4>Fingerprint Unlock</h4>
+                <p>Require a biometric scan (Fingerprint / FaceID) when opening the app.</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="biometric-toggle" onchange="toggleBiometricLock()">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            
+            <div class="admin-form-group" style="margin-top: 24px;">
+              <button class="btn-secondary" style="color: #dc2626; border-color: rgba(220,38,38,0.2);" onclick="changePassword()">Change Password</button>
+            </div>
+          </div>
+          
+          <!-- Notifications -->
+          <div class="settings-panel" data-panel="notifications">
+            <h3 class="settings-panel-title">Email Notifications</h3>
+            
+            <div class="setting-item">
+              <div class="setting-info">
+                <h4>Exam Reminders</h4>
+                <p>Get an email 24 hours before a live exam starts.</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            
+            <div class="setting-item">
+              <div class="setting-info">
+                <h4>New Notes & Materials</h4>
+                <p>Notify me when new study notes are uploaded for my subjects.</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- EXAM TIMER OVERLAY -->
+  <!-- EXAM TIMER & REGENERATED STUDYVAULT PAPER OVERLAY -->
+  <div class="exam-active-overlay hidden" id="exam-overlay">
+    <div class="exam-topbar">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <div style="font-weight: 800; font-size: 1.1rem; letter-spacing: -0.02em; color: var(--text-1);" id="exam-overlay-title">StudyVault Official Examination</div>
+        <span class="exam-badge" id="exam-overlay-badge" style="background: rgba(245,158,11,0.15); color: #d97706; border: 1px solid rgba(245,158,11,0.3);">Live Session</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 20px;">
+        <div>Time Remaining: <span class="exam-timer" id="exam-timer-display">--:--</span></div>
+        <button class="exam-submit-btn" onclick="submitExam()">End &amp; Submit Exam</button>
+      </div>
+    </div>
+    
+    <!-- Paper Container with Official StudyVault Header, Barcode, and Watermark -->
+    <div class="exam-paper-container" id="exam-paper-container">
+      <div class="exam-official-header" id="exam-official-header">
+        <div class="exam-header-meta">
+          <div class="exam-inst-name">STUDYVAULT ACADEMIC PORTAL</div>
+          <div class="exam-doc-title" id="paper-doc-title">CONFIDENTIAL QUESTION PAPER</div>
+          <div class="exam-meta-grid">
+            <div><strong>Candidate:</strong> <span id="paper-candidate-name">Student</span></div>
+            <div><strong>Candidate ID:</strong> <span id="paper-candidate-id">STD-XXXX</span></div>
+            <div><strong>Subject:</strong> <span id="paper-subject-name">Computer Science</span></div>
+            <div><strong>Security Session:</strong> <span id="paper-session-id">SV-LIVE</span></div>
+          </div>
+        </div>
+        <div class="exam-barcode-block">
+          <svg id="paper-barcode-svg"></svg>
+          <div class="barcode-serial" id="paper-barcode-serial">SEC-SV-000000</div>
+        </div>
+      </div>
+
+      <!-- Watermark Background -->
+      <div class="exam-watermark-layer" id="exam-watermark-layer">
+        <div class="exam-watermark-text" id="paper-watermark-text">STUDYVAULT CONFIDENTIAL</div>
+      </div>
+
+      <!-- Rendered PDF or PDF Viewer Frame -->
+      <div class="exam-paper-viewport" id="exam-paper-viewport">
+        <!-- Floating Exam Paper Controls Bar -->
+        <div class="exam-pdf-controls-bar" id="exam-pdf-controls-bar">
+          <div class="exam-pdf-ctrl-group">
+            <button type="button" class="exam-pdf-action-btn" id="exam-pdf-prev-page" onclick="prevExamPdfPage()" title="Previous Page">&larr; Prev</button>
+            <span class="exam-pdf-page-count" id="exam-pdf-page-indicator">Page <span id="exam-pdf-curr-page">1</span> of <span id="exam-pdf-total-pages">1</span></span>
+            <button type="button" class="exam-pdf-action-btn" id="exam-pdf-next-page" onclick="nextExamPdfPage()" title="Next Page">Next &rarr;</button>
+          </div>
+          <div class="exam-pdf-ctrl-group">
+            <button type="button" class="exam-pdf-action-btn" id="exam-pdf-zoom-out" onclick="zoomExamPdf(-0.2)" title="Zoom Out">&minus; Zoom</button>
+            <span class="exam-pdf-zoom-val" id="exam-pdf-zoom-label">100%</span>
+            <button type="button" class="exam-pdf-action-btn" id="exam-pdf-zoom-in" onclick="zoomExamPdf(0.2)" title="Zoom In">+ Zoom</button>
+            <button type="button" class="exam-pdf-action-btn" id="exam-pdf-zoom-fit" onclick="fitExamPdfWidth()" title="Fit to Window">Fit Width</button>
+          </div>
+          <div class="exam-pdf-ctrl-group">
+            <button type="button" class="exam-pdf-action-btn" id="exam-pdf-toggle-view" onclick="toggleExamPdfEngine()" title="Toggle Canvas/Native View">Switch View</button>
+            <a class="exam-pdf-action-btn" id="exam-pdf-direct-open" href="#" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">Open in New Tab</a>
+          </div>
+        </div>
+
+        <!-- High-Performance PDF Canvas Pages Container -->
+        <div class="exam-pdf-pages-scroll" id="exam-pdf-pages-scroll">
+          <div class="exam-pdf-loading-state" id="exam-pdf-loading-state">
+            <div class="exam-pdf-spinner"></div>
+            <div class="exam-pdf-loading-text">Loading official question paper...</div>
+          </div>
+        </div>
+
+        <!-- Fallback / Native Iframe -->
+        <iframe class="exam-frame" id="exam-frame" src="" style="display:none;"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXAM ACCESS CODE & SECURITY UNLOCK MODAL -->
+  <div class="modal hidden" id="exam-unlock-modal" style="position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:3500; align-items:center; justify-content:center; backdrop-filter:blur(6px);">
+    <div style="background:var(--bg-2); border:1px solid var(--border); border-radius:16px; width:90%; max-width:460px; overflow:hidden; box-shadow:0 24px 48px rgba(0,0,0,0.4); margin:auto;">
+      <div style="padding:20px 24px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <h3 style="font-size:1.15rem; font-weight:800; color:var(--text-1); margin:0;">Unlock Question Paper</h3>
+          <span style="font-size:0.8rem; color:var(--text-3);">Authorized Examination Security</span>
+        </div>
+        <button class="admin-close-btn" onclick="closeExamUnlockModal()" style="font-size:1.4rem;">&times;</button>
+      </div>
+      <div style="padding:24px; display:flex; flex-direction:column; gap:16px;">
+        <div>
+          <label style="display:block; font-size:0.85rem; font-weight:700; color:var(--text-2); margin-bottom:6px;">Exam Paper:</label>
+          <div id="unlock-exam-title" style="font-size:0.95rem; font-weight:800; color:var(--text-1); background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:10px 14px;">Title</div>
+        </div>
+        <div id="unlock-exam-window-info" style="font-size:0.82rem; color:var(--text-2); line-height:1.5; background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.25); border-radius:8px; padding:10px 14px;">
+          Scheduled Time Window: Active Now
+        </div>
+        <div>
+          <label class="admin-label">Unique Access Code *</label>
+          <div style="position:relative; display:flex; align-items:center;">
+            <input type="password" id="unlock-code-input" class="admin-input" placeholder="Enter code set by admin" autocomplete="off" onkeydown="if(event.key==='Enter')confirmExamUnlock()" style="letter-spacing:0.1em; font-family:'JetBrains Mono', monospace; padding-right:45px;" />
+            <button type="button" onclick="toggleUnlockCodeVisibility()" style="position:absolute; right:10px; background:none; border:none; color:var(--text-2); cursor:pointer; font-size:1.1rem; padding:4px;" title="Show/Hide Code" id="unlock-toggle-eye">👁️</button>
+          </div>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.75rem;">
+          <span style="color:var(--text-3);">Single-attempt security policy active.</span>
+          <a href="#notices" onclick="closeExamUnlockModal(); switchTab('notices');" style="color:var(--accent); font-weight:700; text-decoration:underline;">View Notice Board &rarr;</a>
+        </div>
+        <button class="admin-submit-btn" id="confirm-unlock-btn" onclick="confirmExamUnlock()" style="margin-top:8px;">Verify Code &amp; Start Paper</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GENERIC FILE VIEWER OVERLAY -->
+  <div class="exam-active-overlay hidden" id="file-viewer-overlay">
+    <div class="exam-topbar">
+      <div style="font-weight: 700;" id="file-viewer-title">Document Preview</div>
+      <button class="exam-submit-btn" style="background: var(--text-2);" onclick="closeFileViewer()">Close</button>
+    </div>
+    <iframe class="exam-frame" id="file-viewer-frame" src=""></iframe>
+  </div>
+
+  <!-- DAILY CHALLENGE LIVE WORKSPACE OVERLAY -->
+  <div class="challenge-workspace-overlay hidden" id="challenge-overlay">
+    <div class="challenge-topbar">
+      <div class="challenge-topbar-info">
+        <span class="challenge-topbar-badge" id="cw-type-badge">DSA Problem</span>
+        <h3 class="challenge-topbar-title" id="cw-title">Challenge Title</h3>
+        <span class="challenge-diff-badge" id="cw-diff-badge">Medium</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <button class="challenge-btn-close" onclick="closeChallengeWorkspace()">✕ Exit</button>
+      </div>
+    </div>
+
+    <div class="challenge-workspace-body">
+      <!-- Left Column: Problem description & Test Cases -->
+      <div class="challenge-problem-pane">
+        <div class="challenge-pane-section">
+          <h4 id="cw-pane-title" style="font-size:1.1rem; font-weight:800; color:var(--text-1); margin-bottom:12px;">Problem Description</h4>
+          <div id="cw-description" class="challenge-markdown-text"></div>
+        </div>
+
+        <div id="cw-testcases-box" class="challenge-pane-section" style="margin-top:20px;">
+          <h5 style="font-size:0.9rem; font-weight:700; color:var(--text-2); margin-bottom:8px;">Example Test Cases / I/O:</h5>
+          <pre id="cw-testcases" class="challenge-code-box"></pre>
+        </div>
+
+        <div id="cw-hint-box" class="challenge-hint-box hidden" style="margin-top:20px;">
+          <div style="font-weight:700; color:var(--accent); margin-bottom:4px;">Solution &amp; Hint</div>
+          <div id="cw-hint-text" style="font-size:0.88rem; color:var(--text-2);"></div>
+        </div>
+
+        <div id="cw-official-box" class="challenge-hint-box hidden" style="margin-top:20px; border-color:rgba(16,185,129,0.3); background:rgba(16,185,129,0.06);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <div style="font-weight:700; color:#10B981;">Official Published Answer</div>
+            <button id="cw-reveal-official-btn" class="editor-reset-btn" style="border-color:#10B981; color:#10B981;" onclick="toggleOfficialAnswer()">View Official Answer</button>
+          </div>
+          <pre id="cw-official-text" class="challenge-code-box hidden" style="background:#0d1117; color:#10B981; margin-top:8px;"></pre>
+        </div>
+      </div>
+
+      <!-- Right Column: Interactive Editor / Quiz Options -->
+      <div class="challenge-interactive-pane">
+        
+        <!-- For DSA / Coding Canvas (Code Only) -->
+        <div id="cw-coding-section" class="cw-tab-content">
+          <div class="editor-header">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size:0.85rem; font-weight:700; color:var(--text-1);">Solution Canvas</span>
+              <select id="cw-lang-select" class="code-lang-select" onchange="changeCanvasLanguage(this.value)">
+                <option value="c">C (GCC)</option>
+                <option value="cpp">C++ (G++)</option>
+                <option value="python">Python 3</option>
+                <option value="java">Java</option>
+                <option value="javascript" selected>JavaScript ES6</option>
+              </select>
+            </div>
+            <button class="editor-reset-btn" onclick="resetChallengeCode()">Reset Code</button>
+          </div>
+
+          <textarea id="cw-code-editor" class="challenge-code-editor" spellcheck="false" placeholder="// Write your solution here..."></textarea>
+          
+          <div class="editor-actions">
+            <button class="btn-run-code" id="cw-btn-test-run" onclick="runChallengeCode()">Test &amp; Run Code</button>
+            <button class="btn-submit-code hidden" id="cw-btn-save-code" onclick="saveChallengeSolution()">Save Solution</button>
+          </div>
+
+          <!-- Live Score & Error Analysis Panel -->
+          <div id="cw-grade-card" class="challenge-grade-card hidden">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-3);">Evaluation Result</span>
+              <div id="cw-grade-score" class="grade-pill">Grade: 10/10</div>
+            </div>
+            <div id="cw-grade-message" style="margin-top:8px; font-size:0.88rem; line-height:1.5;"></div>
+          </div>
+
+          <!-- Console & Error Diagnostic Panel -->
+          <div class="challenge-console-pane">
+            <div class="console-header">
+              <div class="console-dots">
+                <span class="console-dot dot-red"></span>
+                <span class="console-dot dot-yellow"></span>
+                <span class="console-dot dot-green"></span>
+                <span style="margin-left:6px; font-size:0.75rem; font-weight:700; color:#9ca3af; text-transform:uppercase; letter-spacing:0.05em;">Console &amp; Diagnostics</span>
+              </div>
+              <button class="console-clear-btn" onclick="clearConsoleOutput()">Clear</button>
+            </div>
+            <pre id="cw-console-output" class="challenge-console-box">Terminal ready. Click "Test &amp; Run Code" to execute and inspect output.</pre>
+          </div>
+        </div>
+
+        <!-- For Brainstorming (Long Box Only) -->
+        <div id="cw-brainstorm-section" class="cw-tab-content hidden" style="display:none;">
+          <h4 style="font-size:1.05rem; font-weight:700; margin-bottom:8px;">Written Solution &amp; Brainstorming</h4>
+          <p style="font-size:0.85rem; color:var(--text-2); margin-bottom:14px;">Write your detailed explanation, analysis, reasoning, or solution in the box below.</p>
+          
+          <textarea id="cw-brainstorm-input" class="challenge-longbox-editor" placeholder="Type your complete answer and analysis here..."></textarea>
+          
+          <div class="editor-actions" style="margin-top:14px;">
+            <button class="btn-submit-code" id="cw-btn-submit-brainstorm" style="width:100%;" onclick="submitBrainstormAnswer()">Submit Answer for Review</button>
+          </div>
+
+          <!-- Brainstorm Grade & Feedback -->
+          <div id="cw-brainstorm-grade" class="challenge-grade-card hidden" style="margin-top:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:0.8rem; font-weight:700; text-transform:uppercase; color:var(--text-3);">Answer Score</span>
+              <div id="cw-brainstorm-score-pill" class="grade-pill">Grade: 9/10</div>
+            </div>
+            <div id="cw-brainstorm-feedback" style="margin-top:8px; font-size:0.88rem; line-height:1.5;"></div>
+          </div>
+        </div>
+
+        <!-- For Quiz / MCQ (Options Only) -->
+        <div id="cw-quiz-section" class="cw-tab-content hidden" style="display:none;">
+          <h4 style="font-size:1.05rem; font-weight:700; margin-bottom:16px;">Select the Correct Option:</h4>
+          <div class="quiz-options-list" id="cw-quiz-options"></div>
+          
+          <div style="margin-top:24px; display:flex; gap:12px;">
+            <button class="btn-submit-code" id="cw-btn-submit-quiz" style="flex:1;" onclick="submitQuizOption()">Confirm &amp; Check Answer</button>
+          </div>
+
+          <div id="cw-quiz-grade" class="challenge-grade-card hidden" style="margin-top:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:0.8rem; font-weight:700; text-transform:uppercase; color:var(--text-3);">Quiz Result</span>
+              <div id="cw-quiz-score-pill" class="grade-pill">Grade: 10/10</div>
+            </div>
+            <div id="cw-quiz-feedback" style="margin-top:8px; font-size:0.88rem; line-height:1.5;"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN MODAL -->
+  <div class="admin-modal" id="admin-modal">
+    <div class="admin-modal-box">
+      <div class="admin-modal-header">
+        <div class="admin-modal-title-group">
+          <span class="admin-title-badge">PORTAL CONTROLLER</span>
+          <h2 class="admin-modal-title">Administrative Command Suite</h2>
+        </div>
+        <button class="admin-close-btn" onclick="closeAdminPanel()" aria-label="Close Admin Panel">&times;</button>
+      </div>
+
+      <div class="admin-layout-split">
+        <!-- Organized Left Sidebar Navigation -->
+        <aside class="admin-nav-sidebar">
+          
+          <div>
+            <div class="admin-nav-group-title">Publish &amp; Create</div>
+            <div class="admin-nav-list">
+              <button class="admin-tab-btn active" data-tab="notes" onclick="switchAdminTab('notes')">
+                <span class="admin-tab-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                </span>
+                <span>Upload Note</span>
+              </button>
+              
+              <button class="admin-tab-btn" data-tab="exams" onclick="switchAdminTab('exams')">
+                <span class="admin-tab-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                </span>
+                <span>Schedule Exam</span>
+              </button>
+              
+              <button class="admin-tab-btn" data-tab="notices" onclick="switchAdminTab('notices')">
+                <span class="admin-tab-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                </span>
+                <span>Post Notice</span>
+              </button>
+              
+              <button class="admin-tab-btn" data-tab="challenges" onclick="switchAdminTab('challenges')">
+                <span class="admin-tab-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                </span>
+                <span>Publish Challenge</span>
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <div class="admin-nav-group-title">Review &amp; Student Work</div>
+            <div class="admin-nav-list">
+              <button class="admin-tab-btn" data-tab="responses" onclick="switchAdminTab('responses')">
+                <span class="admin-tab-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><circle cx="10" cy="12" r="2"></circle><path d="m21 21-3.5-3.5"></path></svg>
+                </span>
+                <span>Exam Papers</span>
+              </button>
+              
+              <button class="admin-tab-btn" data-tab="challenge_submissions" onclick="switchAdminTab('challenge_submissions')">
+                <span class="admin-tab-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </span>
+                <span>DSA Solutions</span>
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <div class="admin-nav-group-title">Portal Administration</div>
+            <div class="admin-nav-list">
+              <button class="admin-tab-btn" data-tab="approvals" onclick="switchAdminTab('approvals')">
+                <span class="admin-tab-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                </span>
+                <span>Payment Approvals</span>
+              </button>
+              
+              <button class="admin-tab-btn" data-tab="mail" onclick="switchAdminTab('mail')">
+                <span class="admin-tab-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </span>
+                <span>Mail Service</span>
+              </button>
+            </div>
+          </div>
+
+        </aside>
+
+        <!-- Right Content Body -->
+        <div class="admin-modal-body">
+          
+          <!-- Upload Note -->
+          <div class="admin-tab-panel active" data-panel="notes" id="admin-panel-notes">
+            <div class="panel-header-desc">
+              <h3 class="panel-headline">Upload Course Notes &amp; PDF Materials</h3>
+              <p class="panel-subtext">Publish syllabus materials, lecture notes, or reference docs for students.</p>
+            </div>
+          <div class="admin-form-group">
+            <label class="admin-label">Note Title *</label>
+            <input type="text" id="an-title" class="admin-input" placeholder="e.g. Data Structures Chapter 1" />
+          </div>
+          <div style="display:flex; gap:14px; flex-wrap:wrap;">
+            <div class="admin-form-group" style="flex:1; min-width:160px;">
+              <label class="admin-label">Subject *</label>
+              <select id="an-subject" class="admin-select">
+                <option value="dsa">DSA</option>
+                <option value="cn">Computer Networks</option>
+                <option value="coa">COA</option>
+                <option value="vm">Vedic Math</option>
+                <option value="os">OS</option>
+                <option value="se">Software Engg</option>
+                <option value="ap">Applied Physics</option>
+                <option value="m1">Math 1</option>
+                <option value="m2">Math 2</option>
+                <option value="evs">EVS</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="admin-form-group" style="flex:1; min-width:160px;">
+              <label class="admin-label">Material Type *</label>
+              <select id="an-type" class="admin-select">
+                <option value="notes" selected>Subject Notes / Units</option>
+                <option value="syllabus">Official Syllabus &amp; Curriculum</option>
+              </select>
+            </div>
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-label">Upload File (PDF) *</label>
+            <input type="file" id="an-file" class="admin-file-input" accept=".pdf,.doc,.docx" />
+          </div>
+          <button class="admin-submit-btn" id="upload-note-btn" onclick="uploadNote()">Upload Note</button>
+        </div>
+
+        <!-- Upload Exam -->
+        <div class="admin-tab-panel" data-panel="exams" id="admin-panel-exams">
+          <div class="panel-header-desc">
+            <h3 class="panel-headline">Schedule &amp; Upload Examination</h3>
+            <p class="panel-subtext">Set timed testing windows, access secret keys, and auto-dispatch email notifications to students.</p>
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-label">Exam Title *</label>
+            <input type="text" id="ae-title" class="admin-input" placeholder="e.g. Data Structures Midterm Evaluation" />
+          </div>
+          <div style="display:flex; gap:14px; flex-wrap:wrap;">
+            <div class="admin-form-group" style="flex:1; min-width:160px;">
+              <label class="admin-label">Category *</label>
+              <select id="ae-cat" class="admin-select">
+                <option value="mock">Mock Test</option>
+                <option value="prev">Previous Year Paper</option>
+                <option value="assign">Graded Assignment</option>
+              </select>
+            </div>
+            <div class="admin-form-group" style="flex:1; min-width:160px;">
+              <label class="admin-label">Subject Code *</label>
+              <input type="text" id="ae-subject" class="admin-input" placeholder="e.g. dsa, cn, m1, os" />
+            </div>
+          </div>
+          <div style="display:flex; gap:14px; flex-wrap:wrap;">
+            <div class="admin-form-group" style="flex:1; min-width:200px;">
+              <label class="admin-label">Exam Window Start Time (Students can start) *</label>
+              <input type="datetime-local" id="ae-date" class="admin-input" />
+            </div>
+            <div class="admin-form-group" style="flex:1; min-width:200px;">
+              <label class="admin-label">Exam Window End Time (Paper closes)</label>
+              <input type="datetime-local" id="ae-end-date" class="admin-input" />
+            </div>
+          </div>
+          <div style="display:flex; gap:14px; flex-wrap:wrap;">
+            <div class="admin-form-group" style="flex:1; min-width:160px;">
+              <label class="admin-label">Secret Access Code *</label>
+              <input type="text" id="ae-access-code" class="admin-input" placeholder="e.g. EXAM-8492" />
+            </div>
+            <div class="admin-form-group" style="flex:1; min-width:160px;">
+              <label class="admin-label">Duration in Minutes (0 for untimed) *</label>
+              <input type="number" id="ae-duration" class="admin-input" placeholder="60" value="60" />
+            </div>
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-label">Question Paper PDF File *</label>
+            <input type="file" id="ae-file" class="admin-file-input" accept=".pdf" />
+            <small style="color: var(--text-3); font-size: 0.76rem; display: block; margin-top: 5px;">PDF is protected automatically with dynamic student watermarking, candidate IDs, and barcodes.</small>
+          </div>
+
+          <!-- Email Dispatch Control -->
+          <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:12px; padding:14px 18px; margin-bottom:12px; display:flex; align-items:center; justify-content:space-between;">
+            <div>
+              <strong style="font-size:0.9rem; color:var(--text-1); display:block;">Send Email Notification</strong>
+              <span style="font-size:0.75rem; color:var(--text-3);">Notify students with exam timetable and secret access code</span>
+            </div>
+            <input type="checkbox" id="ae-send-email" style="width:20px; height:20px; cursor:pointer;" checked onchange="document.getElementById('ae-recipient-group').style.display = this.checked ? 'block' : 'none';" />
+          </div>
+
+          <div id="ae-recipient-group" class="admin-form-group" style="margin-bottom:14px;">
+            <label class="admin-label">Specific Student Emails (Optional)</label>
+            <input type="text" id="ae-recipient-emails" class="admin-input" placeholder="Leave blank to email all enrolled students, or enter student@domain.com" />
+          </div>
+
+          <!-- Notice Board Announcement Toggle -->
+          <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:12px; padding:14px 18px; margin-bottom:16px; display:flex; align-items:center; justify-content:space-between;">
+            <div>
+              <strong style="font-size:0.9rem; color:var(--text-1); display:block;">Pin to Student Notice Board</strong>
+              <span style="font-size:0.75rem; color:var(--text-3);">Broadcast schedule and paper unlock details automatically</span>
+            </div>
+            <input type="checkbox" id="ae-post-notice" style="width:20px; height:20px; cursor:pointer;" checked />
+          </div>
+
+          <button class="admin-submit-btn" id="upload-exam-btn" onclick="uploadExam()">Schedule &amp; Upload Exam</button>
+        </div>
+
+        <!-- Post Notice -->
+        <div class="admin-tab-panel" data-panel="notices" id="admin-panel-notices">
+          <div class="panel-header-desc">
+            <h3 class="panel-headline">Broadcast Official Announcement</h3>
+            <p class="panel-subtext">Post campus bulletins, circulars, deadline alerts, and notify students via email.</p>
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-label">Notice Headline *</label>
+            <input type="text" id="anot-title" class="admin-input" placeholder="e.g. Revised Midterm Exam Timetable Released" />
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-label">Announcement Category *</label>
+            <select id="anot-type" class="admin-select">
+              <option value="important">Important Bulletin</option>
+              <option value="resources">Academic Resources</option>
+              <option value="deadlines">Deadline &amp; Submissions</option>
+            </select>
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-label">Announcement Content *</label>
+            <textarea id="anot-body" class="admin-input" style="min-height:110px;" placeholder="Write detailed circular text for students..."></textarea>
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-label">Reference Link (Optional)</label>
+            <input type="url" id="anot-link" class="admin-input" placeholder="https://..." />
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-label">Attach Circular PDF (Optional)</label>
+            <input type="file" id="anot-file" class="admin-file-input" accept=".pdf" />
+          </div>
+
+          <!-- Simple Email Toggle -->
+          <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:12px; padding:14px 18px; margin-bottom:16px; display:flex; align-items:center; justify-content:space-between;">
+            <div>
+              <strong style="font-size:0.9rem; color:var(--text-1); display:block;">Email Broadcast to All Students</strong>
+              <span style="font-size:0.75rem; color:var(--text-3);">Send immediate notification to all registered student inboxes</span>
+            </div>
+            <input type="checkbox" id="anot-send-email" style="width:20px; height:20px; cursor:pointer;" checked />
+          </div>
+
+          <button class="admin-submit-btn" id="post-notice-btn" onclick="uploadNotice()">Publish Announcement</button>
+        </div>
+
+        <!-- Publish Challenge (DSA / Quiz / Brainstorming) -->
+        <div class="admin-tab-panel" data-panel="challenges" id="admin-panel-challenges">
+          <div class="panel-header-desc">
+            <h3 class="panel-headline">Create Daily Challenge</h3>
+            <p class="panel-subtext">Engage students with daily coding problems, interactive MCQs, or logic puzzles.</p>
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-label">Challenge Title *</label>
+            <input type="text" id="ac-title" class="admin-input" placeholder="e.g. Reverse Linked List / Binary Search Tree Validation" />
+          </div>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <div class="admin-form-group" style="flex:1; min-width:140px;">
+              <label class="admin-label">Challenge Format *</label>
+              <select id="ac-type" class="admin-select" onchange="toggleAdminChallengeTypeFields()">
+                <option value="dsa">DSA Coding Problem</option>
+                <option value="quiz">Interactive MCQ Quiz</option>
+                <option value="brainstorm">Brainstorming Riddle</option>
+              </select>
+            </div>
+            <div class="admin-form-group" style="flex:1; min-width:140px;">
+              <label class="admin-label">Difficulty *</label>
+              <select id="ac-diff" class="admin-select">
+                <option value="Easy">Easy</option>
+                <option value="Medium" selected>Medium</option>
+                <option value="Hard">Hard</option>
+              </select>
+            </div>
+            <div class="admin-form-group" style="flex:1; min-width:100px;">
+              <label class="admin-label">XP Points *</label>
+              <input type="number" id="ac-points" class="admin-input" value="10" />
+            </div>
+          </div>
+
+          <div class="admin-form-group">
+            <label class="admin-label">Problem Statement &amp; Constraints *</label>
+            <textarea id="ac-desc" class="admin-input" style="min-height:110px;" placeholder="Describe the problem, input format, output format, and edge cases..."></textarea>
+          </div>
+
+          <!-- Fields for DSA Coding -->
+          <div id="ac-dsa-fields">
+            <div class="admin-form-group">
+              <label class="admin-label">Starter Code Template (Optional)</label>
+              <textarea id="ac-starter" class="admin-input code-font" style="min-height:90px; font-family:monospace;" placeholder="function solve(nums) {\n  // Write solution here\n}"></textarea>
+            </div>
+            <div class="admin-form-group">
+              <label class="admin-label">Example Test Cases (Input / Output)</label>
+              <textarea id="ac-testcases" class="admin-input" style="min-height:70px; font-family:monospace;" placeholder="Input: nums = [2,7,11,15], target = 9&#10;Output: [0,1]"></textarea>
+            </div>
+          </div>
+
+          <!-- Fields for Quiz / MCQ -->
+          <div id="ac-quiz-fields" style="display:none;">
+            <div class="admin-form-group" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:18px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+                <div>
+                  <label class="admin-label" style="margin:0 0 2px 0; font-size:0.88rem; color:#F8FAFC;">Quiz Options &amp; Answer Key</label>
+                  <span style="font-size:0.75rem; color:#94A3B8;">Click the circular radio button next to an option to mark it as the <strong>Correct Answer</strong>.</span>
+                </div>
+                <button type="button" class="btn-secondary" style="padding:6px 14px; font-size:0.78rem; border-radius:8px; border-color:rgba(59,130,246,0.3); color:#60A5FA;" onclick="addAdminQuizOption()">+ Add Option</button>
+              </div>
+              <div id="ac-quiz-options-container" style="display:flex; flex-direction:column; gap:10px;">
+                <div class="ac-quiz-opt-row">
+                  <input type="radio" name="ac-correct-opt" value="0" checked title="Mark as correct answer" />
+                  <span class="ac-opt-badge">A</span>
+                  <input type="text" class="admin-input ac-opt-text" placeholder="Enter option 1 text..." style="flex:1; padding:8px 12px;" />
+                  <span class="ac-correct-tag">Correct Answer</span>
+                  <button type="button" class="admin-close-btn" style="font-size:1.1rem; padding:4px 8px; opacity:0.6;" onclick="removeAdminQuizOption(this)" title="Remove option">&times;</button>
+                </div>
+                <div class="ac-quiz-opt-row">
+                  <input type="radio" name="ac-correct-opt" value="1" title="Mark as correct answer" />
+                  <span class="ac-opt-badge">B</span>
+                  <input type="text" class="admin-input ac-opt-text" placeholder="Enter option 2 text..." style="flex:1; padding:8px 12px;" />
+                  <span class="ac-correct-tag">Correct Answer</span>
+                  <button type="button" class="admin-close-btn" style="font-size:1.1rem; padding:4px 8px; opacity:0.6;" onclick="removeAdminQuizOption(this)" title="Remove option">&times;</button>
+                </div>
+                <div class="ac-quiz-opt-row">
+                  <input type="radio" name="ac-correct-opt" value="2" title="Mark as correct answer" />
+                  <span class="ac-opt-badge">C</span>
+                  <input type="text" class="admin-input ac-opt-text" placeholder="Enter option 3 text..." style="flex:1; padding:8px 12px;" />
+                  <span class="ac-correct-tag">Correct Answer</span>
+                  <button type="button" class="admin-close-btn" style="font-size:1.1rem; padding:4px 8px; opacity:0.6;" onclick="removeAdminQuizOption(this)" title="Remove option">&times;</button>
+                </div>
+                <div class="ac-quiz-opt-row">
+                  <input type="radio" name="ac-correct-opt" value="3" title="Mark as correct answer" />
+                  <span class="ac-opt-badge">D</span>
+                  <input type="text" class="admin-input ac-opt-text" placeholder="Enter option 4 text..." style="flex:1; padding:8px 12px;" />
+                  <span class="ac-correct-tag">Correct Answer</span>
+                  <button type="button" class="admin-close-btn" style="font-size:1.1rem; padding:4px 8px; opacity:0.6;" onclick="removeAdminQuizOption(this)" title="Remove option">&times;</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-form-group">
+            <label class="admin-label">Official Solution &amp; Answer (Revealed after submission)</label>
+            <textarea id="ac-official-answer" class="admin-input" style="min-height:90px; font-family:monospace;" placeholder="Provide the verified ideal solution and reasoning..."></textarea>
+          </div>
+
+          <div class="admin-form-group">
+            <label class="admin-label">Helpful Hint (Optional clue for students)</label>
+            <input type="text" id="ac-hint" class="admin-input" placeholder="e.g. Try using a two-pointer approach or hash table" />
+          </div>
+
+          <button class="admin-submit-btn" id="upload-challenge-btn" onclick="publishChallenge()">Publish Daily Challenge</button>
+        </div>
+
+        <!-- View Challenge Submissions Panel -->
+        <div class="admin-tab-panel" data-panel="challenge_submissions" id="admin-panel-challenge-submissions">
+          <div class="panel-header-desc">
+            <h3 class="panel-headline">Student Challenge Submissions</h3>
+            <p class="panel-subtext">Review submitted code, MCQ answers, scores, and completion timestamps.</p>
+          </div>
+          <div style="display:flex; justify-content:flex-end; margin-bottom:14px;">
+            <button class="admin-submit-btn" style="padding:8px 18px; font-size:0.85rem; width:auto;" onclick="loadChallengeSubmissions()">Refresh Submissions</button>
+          </div>
+          <div id="admin-challenge-submissions-list" style="display:flex; flex-direction:column; gap:12px;"></div>
+        </div>
+
+        <!-- View Responses -->
+        <div class="admin-tab-panel" data-panel="responses" id="admin-panel-responses">
+          <div class="panel-header-desc">
+            <h3 class="panel-headline">Student Exam Papers &amp; Responses</h3>
+            <p class="panel-subtext">Examine answer submissions, start/end timestamps, and evaluation records.</p>
+          </div>
+          <div style="display:flex; justify-content:flex-end; margin-bottom:14px;">
+            <button class="admin-submit-btn" onclick="loadExamResponses()" style="padding:8px 18px; font-size:0.85rem; width:auto;">Refresh Exam Submissions</button>
+          </div>
+          <div id="admin-responses-list" style="display:flex; flex-direction:column; gap:12px;"></div>
+        </div>
+
+        <!-- Approvals Panel -->
+        <div class="admin-tab-panel" data-panel="approvals" id="admin-panel-approvals">
+          <div class="panel-header-desc">
+            <h3 class="panel-headline">Subscription &amp; Payment Verification</h3>
+            <p class="panel-subtext">Approve or reject student UPI UTR transactions to activate pro access.</p>
+          </div>
+          <div id="admin-approvals-list" style="display:flex; flex-direction:column; gap:12px;"></div>
+        </div>
+
+        <!-- Mail Configuration Panel -->
+        <div class="admin-tab-panel" data-panel="mail" id="admin-panel-mail">
+          <div class="panel-header-desc">
+            <h3 class="panel-headline">Email Notification Dispatcher</h3>
+            <p class="panel-subtext">Automated SMTP service status, credentials verification, and test message delivery.</p>
+          </div>
+          <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:14px; padding:24px; display:flex; flex-direction:column; gap:16px;">
+            <div style="display:flex; align-items:center; gap:14px;">
+              <div style="width:12px; height:12px; border-radius:50%; background:#10b981; box-shadow:0 0 12px #10b981;"></div>
+              <div>
+                <strong style="font-size:1.05rem; color:var(--text-1); display:block;">Gmail SMTP Service Active</strong>
+                <span style="font-size:0.8rem; color:var(--text-3);">Connected dispatcher: <strong>souriksamanta927@gmail.com</strong></span>
+              </div>
+            </div>
+            <p style="font-size:0.86rem; color:var(--text-2); margin:0; line-height:1.5;">
+              Automatic email delivery is configured via secure Google App Passwords. Scheduled exams and published announcements will be dispatched seamlessly to all enrolled students.
+            </p>
+            <div style="background:var(--card-bg); border:1px solid var(--border); border-radius:10px; padding:16px; display:flex; flex-direction:column; gap:10px; margin-top:8px;">
+              <label class="admin-label" style="margin:0;">Send Verification Test Email</label>
+              <div style="display:flex; gap:10px;">
+                <input type="email" id="mail-test-recipient" class="admin-input" placeholder="Enter recipient email address" value="souriksamanta927@gmail.com" style="flex:1;" />
+                <button type="button" class="admin-submit-btn" style="width:auto; padding:0 20px; white-space:nowrap;" onclick="testAdminMailDispatch()">Send Test</button>
+              </div>
+              <small style="color:var(--text-3); font-size:0.75rem;">Immediately tests the live SMTP connection and confirms delivery in the target inbox.</small>
+            </div>
+          </div>
+        </div>
+
+      </div> <!-- end admin-modal-body -->
+    </div> <!-- end admin-layout-split -->
+  </div> <!-- end admin-modal-box -->
+</div> <!-- end admin-modal -->
+
+  <!-- AI Chatbot UI -->
+  <div class="chat-launcher" onclick="toggleChat()">
+    <div class="chat-launcher-icon">✨</div>
+    <span class="chat-launcher-text">Ask AI</span>
+  </div>
+  
+  <div class="chat-window hidden" id="chat-window">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-avatar">✨</div>
+        <div class="chat-title">StudyVault AI</div>
+      </div>
+      <button class="chat-close-btn" onclick="toggleChat()">✕</button>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="chat-msg ai">Hello! I am your AI tutor. Ask me any question about your curriculum! (Demo Mode)</div>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" id="chat-input" placeholder="Type a question..." autocomplete="off" onkeypress="if(event.key==='Enter') sendChatMessage()" />
+      <button class="chat-send-btn" onclick="sendChatMessage()">
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- UPI PAYMENT MODAL -->
+  <div class="exam-active-overlay hidden" id="payment-overlay" style="backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 9999; display: flex; align-items: center; justify-content: center;">
+    <div class="payment-modal reveal-up" style="background: var(--bg-2); padding: 40px; border-radius: var(--r-xl); width: 750px; max-width: 95%; border: 1px solid var(--border); box-shadow: 0 24px 60px rgba(0,0,0,0.2);">
+      
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+        <h3 style="font-size: 1.5rem; font-weight: 800; color: var(--text-1); margin: 0;">Complete Your Subscription</h3>
+        <button class="close-btn" style="background: none; border: none; font-size: 1.8rem; cursor: pointer; color: var(--text-3);" onclick="closePaymentModal()">×</button>
+      </div>
+
+      <div style="display: flex; gap: 40px; align-items: flex-start; flex-wrap: wrap;">
+        <!-- Left: QR Code -->
+        <div style="flex: 1; min-width: 250px; text-align: center; border-right: 1px dashed var(--border); padding-right: 40px;">
+          <div style="margin-bottom: 24px;">
+            <div id="payment-amount" style="font-size: 3rem; font-weight: 900; color: var(--text-1); line-height: 1;">Rs 99</div>
+            <p id="payment-subtitle" style="color: var(--text-2); font-size: 1rem; font-weight: 600; margin-top: 8px;">Lite Version</p>
+          </div>
+          <div style="background: #fff; padding: 16px; border-radius: 12px; display: inline-block; margin-bottom: 16px; box-shadow: var(--shadow-sm);">
+            <img id="payment-qr" src="" alt="UPI QR Code" style="width: 220px; height: 220px; display: block;" />
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-3); font-weight: 500;">Scan with PhonePe, GPay, Paytm or any UPI App.</p>
+        </div>
+        
+        <!-- Right: Verification Form -->
+        <div style="flex: 1; min-width: 250px; display: flex; flex-direction: column; justify-content: center;">
+          <div style="background: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.2); padding: 16px; border-radius: 12px; margin-bottom: 24px;">
+            <h4 style="font-size: 0.95rem; font-weight: 700; color: #D97706; margin-bottom: 8px;">How to proceed?</h4>
+            <ul style="font-size: 0.85rem; color: var(--text-2); margin: 0; padding-left: 20px; line-height: 1.5;">
+              <li>Open your UPI app.</li>
+              <li>Scan the QR code on the left.</li>
+              <li>Complete the payment.</li>
+              <li>Enter the 12-digit UTR/Reference number below.</li>
+            </ul>
+          </div>
+          
+          <label class="admin-label" style="display: block; font-size: 0.85rem; font-weight: 700; color: var(--text-1); margin-bottom: 8px;">Enter UTR / Reference No.</label>
+          <input type="text" id="payment-utr" class="admin-input" style="width: 100%; padding: 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); color: var(--text-1); font-size: 1rem; font-weight: 600; margin-bottom: 24px;" placeholder="e.g. 123456789012" />
+          
+          <button class="btn-premium" id="pay-now-btn" style="width: 100%; padding: 16px; font-size: 1.05rem; border-radius: 50px; border: none; font-weight: 800; cursor: pointer; text-transform: uppercase; letter-spacing: 0.05em;" onclick="processPayment()">Verify Payment</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MCQ / QUIZ POPUP MODAL (POPUP OF OPTIONS) -->
+  <div class="modal hidden" id="mcq-popup-modal" style="position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:3500; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(8px);">
+    <div style="background:var(--bg-2); border:1px solid var(--border); border-radius:18px; width:92%; max-width:620px; max-height:88vh; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 24px 60px rgba(0,0,0,0.5);">
+      
+      <!-- Top Header -->
+      <div style="padding:18px 24px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background:var(--bg-3);">
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+          <span style="background:rgba(99,102,241,0.15); color:var(--accent); font-size:0.75rem; font-weight:800; padding:4px 10px; border-radius:50px; text-transform:uppercase; letter-spacing:0.04em;">Quiz / MCQ</span>
+          <span id="mcq-diff-badge" class="challenge-diff-badge challenge-diff-medium">Medium</span>
+        </div>
+        <button class="challenge-btn-close" onclick="closeMcqModal()" style="padding:6px 14px; font-size:0.85rem;">✕ Close</button>
+      </div>
+
+      <!-- Scrollable Body -->
+      <div style="padding:24px; overflow-y:auto; flex:1; display:flex; flex-direction:column; gap:18px;">
+        <div>
+          <h3 id="mcq-modal-title" style="font-size:1.2rem; font-weight:800; color:var(--text-1); margin:0 0 10px 0;">Quiz Question</h3>
+          <div id="mcq-modal-question" style="font-size:0.95rem; line-height:1.6; color:var(--text-1); background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:16px; white-space:pre-wrap;"></div>
+        </div>
+
+        <div>
+          <div style="font-size:0.82rem; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:10px;">Select your answer (Single Attempt):</div>
+          <div id="mcq-modal-options" class="quiz-options-list" style="display:flex; flex-direction:column; gap:10px;"></div>
+        </div>
+
+        <!-- Result Card -->
+        <div id="mcq-modal-grade" class="challenge-grade-card hidden">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-3);">Evaluation Result</span>
+            <div id="mcq-modal-score-pill" class="grade-pill">Grade: 10/10</div>
+          </div>
+          <div id="mcq-modal-feedback" style="margin-top:8px; font-size:0.88rem; line-height:1.5;"></div>
+        </div>
+      </div>
+
+      <!-- Bottom Footer -->
+      <div style="padding:16px 24px; border-top:1px solid var(--border); background:var(--bg-3); display:flex; gap:12px;">
+        <button id="mcq-modal-submit-btn" class="btn-submit-code" style="flex:1; padding:12px; font-size:0.92rem; opacity:0.5; cursor:not-allowed;" disabled onclick="submitMcqModalAnswer()">Select an option to submit</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ADMIN VIEW SUBMISSIONS MODAL FOR ATTACHED QUESTION -->
+  <div class="modal hidden" id="admin-view-subs-modal" style="position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:3600; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(6px);">
+    <div style="background:var(--bg-2); border:1px solid var(--border); border-radius:14px; width:90%; max-width:760px; max-height:85vh; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 20px 40px rgba(0,0,0,0.5);">
+      <div style="padding:16px 20px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <h3 id="admin-view-subs-title" style="font-size:1.1rem; font-weight:800; color:var(--text-1); margin:0;">Submissions for Question</h3>
+          <span id="admin-view-subs-subtitle" style="font-size:0.8rem; color:var(--text-3);">Review student submissions &amp; assign marks</span>
+        </div>
+        <button class="admin-close-btn" onclick="closeAdminSubmissionsModal()" style="font-size:1.4rem;">&times;</button>
+      </div>
+      <div id="admin-view-subs-content" style="padding:20px; overflow-y:auto; flex:1; display:flex; flex-direction:column; gap:16px;">
+        <div style="color:var(--text-2);">Loading submissions...</div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

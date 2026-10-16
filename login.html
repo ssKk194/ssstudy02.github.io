@@ -1,0 +1,991 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudyVault — Premium Scholar Portal</title>
+  <meta name="description" content="Sign in to StudyVault engineering study portal." />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0F172A" />
+  <link rel="apple-touch-icon" href="https://api.iconify.design/mdi/school-outline.svg?color=%23F59E0B&width=192&height=192">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #090D16;
+      --bg-card: rgba(18, 24, 38, 0.72);
+      --bg-card-border: rgba(255, 255, 255, 0.1);
+      --text-1: #F8FAFC;
+      --text-2: #94A3B8;
+      --text-3: #64748B;
+      --accent: #3B82F6;
+      --accent-glow: rgba(59, 130, 246, 0.35);
+      --amber: #F59E0B;
+      --amber-glow: rgba(245, 158, 11, 0.25);
+      --emerald: #10B981;
+      --purple: #8B5CF6;
+      --error: #EF4444;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+    html { -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text-1);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow-x: hidden;
+      perspective: 1200px;
+    }
+
+    /* ── Ambient Animated Aurora Background ── */
+    .ambient-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.45;
+      animation: floatOrb 18s ease-in-out infinite alternate;
+      will-change: transform;
+    }
+    .orb-1 {
+      width: 520px; height: 520px;
+      background: radial-gradient(circle, #2563EB 0%, rgba(37,99,235,0) 70%);
+      top: -100px; left: -100px;
+    }
+    .orb-2 {
+      width: 480px; height: 480px;
+      background: radial-gradient(circle, #7C3AED 0%, rgba(124,58,237,0) 70%);
+      bottom: -120px; right: 5%;
+      animation-duration: 22s;
+    }
+    .orb-3 {
+      width: 380px; height: 380px;
+      background: radial-gradient(circle, #D97706 0%, rgba(217,119,6,0) 70%);
+      top: 40%; left: 35%;
+      opacity: 0.2;
+      animation-duration: 15s;
+    }
+    @keyframes floatOrb {
+      0%   { transform: translate(0, 0) scale(1); }
+      50%  { transform: translate(60px, 40px) scale(1.12); }
+      100% { transform: translate(-40px, 70px) scale(0.95); }
+    }
+
+    /* Subtle Grid Overlay */
+    .ambient-grid {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 54px 54px;
+      mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 20%, transparent 80%);
+      pointer-events: none;
+    }
+
+    /* ── Main Container (Split Screen Layout on Desktop) ── */
+    .portal-shell {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 1140px;
+      padding: 30px 24px;
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    /* ── Left Showcase: Interactive 3D Live Card ── */
+    .showcase-pane {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .brand-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-logo-hex {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      box-shadow: 0 8px 24px var(--accent-glow), inset 0 1px 1px rgba(255,255,255,0.4);
+    }
+    .brand-header-text {
+      display: flex;
+      flex-direction: column;
+    }
+    .brand-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #fff;
+    }
+    .brand-title span {
+      background: linear-gradient(135deg, #60A5FA 0%, #93C5FD 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .brand-caption {
+      font-size: 0.8rem;
+      color: var(--text-2);
+      font-weight: 500;
+    }
+
+    .showcase-hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+    }
+    .showcase-hero-title .gradient-txt {
+      background: linear-gradient(135deg, #F59E0B 20%, #FBBF24 50%, #FCD34D 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* ── 3D Holographic Card Container ── */
+    .live-card-container {
+      perspective: 1200px;
+      cursor: pointer;
+    }
+
+    .hologram-card {
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      border-radius: 24px;
+      padding: 30px;
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow:
+        0 25px 50px -12px rgba(0, 0, 0, 0.7),
+        0 0 30px rgba(59, 130, 246, 0.2);
+      transform-style: preserve-3d;
+      transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.3s ease;
+      overflow: hidden;
+    }
+
+    /* Moving light sheen on hover */
+    .card-glare {
+      position: absolute;
+      inset: -100%;
+      background: radial-gradient(circle 350px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.18), transparent 70%);
+      pointer-events: none;
+      transform: translateZ(1px);
+    }
+
+    .card-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      transform: translateZ(20px);
+    }
+    .card-chip {
+      width: 44px;
+      height: 32px;
+      background: linear-gradient(135deg, #F59E0B 0%, #D97706 60%, #B45309 100%);
+      border-radius: 6px;
+      position: relative;
+      box-shadow: inset 0 1px 2px rgba(255,255,255,0.5), 0 2px 6px rgba(0,0,0,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-chip::after {
+      content: '';
+      width: 24px;
+      height: 18px;
+      border: 1px solid rgba(0,0,0,0.3);
+      border-radius: 3px;
+    }
+    .card-type-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #93C5FD;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .card-center-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      transform: translateZ(35px);
+    }
+    .card-avatar-ring {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+      padding: 2.5px;
+      box-shadow: 0 0 16px rgba(59, 130, 246, 0.4);
+    }
+    .card-avatar-inner {
+      width: 100%;
+      height: 100%;
+      background: #0F172A;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: #F8FAFC;
+    }
+    .card-user-info {
+      display: flex;
+      flex-direction: column;
+    }
+    .card-student-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .card-student-role {
+      font-size: 0.78rem;
+      color: var(--amber);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .card-bottom-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-top: 14px;
+      border-top: 1px dashed rgba(255,255,255,0.12);
+      transform: translateZ(25px);
+    }
+    .card-signature {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.35rem;
+      color: rgba(255,255,255,0.75);
+    }
+    .card-id-code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: #94A3B8;
+      letter-spacing: 0.12em;
+    }
+
+    /* Floating Feature Badges */
+    .feature-pills-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .feat-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      color: var(--text-2);
+      transition: all 0.25s var(--ease);
+    }
+    .feat-pill:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.18);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+    .feat-icon {
+      font-size: 0.95rem;
+    }
+
+    /* ── Right Pane: 3D Frosted Glass Auth Card ── */
+    .auth-pane {
+      position: relative;
+    }
+    .login-3d-card {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      backdrop-filter: blur(28px) saturate(180%);
+      border-radius: 28px;
+      padding: 42px 38px;
+      box-shadow:
+        0 30px 60px -15px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      animation: cardEnter 0.65s var(--spring) forwards;
+      position: relative;
+      overflow: hidden;
+    }
+    @keyframes cardEnter {
+      0%   { opacity: 0; transform: translateY(30px) scale(0.96); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .auth-header {
+      margin-bottom: 30px;
+    }
+    .auth-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #FBBF24;
+      margin-bottom: 12px;
+      letter-spacing: 0.04em;
+    }
+    .pulse-dot-amber {
+      width: 6px; height: 6px;
+      background: #F59E0B;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #F59E0B;
+      animation: pulseGlow 2s infinite;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    .auth-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .auth-sub {
+      font-size: 0.88rem;
+      color: var(--text-2);
+      margin-top: 6px;
+    }
+
+    /* ── Form Inputs with Modern Float Style ── */
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-2);
+      margin-bottom: 8px;
+      letter-spacing: 0.01em;
+    }
+    .input-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .input-icon-left {
+      position: absolute;
+      left: 16px;
+      color: var(--text-3);
+      pointer-events: none;
+      transition: color 0.2s;
+    }
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      padding: 14px 16px 14px 46px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: #fff;
+      outline: none;
+      transition: all 0.25s var(--ease);
+    }
+    input[type="email"]::placeholder,
+    input[type="password"]::placeholder {
+      color: var(--text-3);
+    }
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #3B82F6;
+      background: rgba(15, 23, 42, 0.9);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+    }
+    input:focus ~ .input-icon-left {
+      color: #60A5FA;
+    }
+
+    .pw-toggle {
+      position: absolute;
+      right: 14px;
+      background: none;
+      border: none;
+      color: var(--text-3);
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 8px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .pw-toggle:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* ── Live Alert Messages ── */
+    .alert {
+      display: none;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 20px;
+      line-height: 1.5;
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .alert.error {
+      display: flex;
+      gap: 10px;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #FCA5A5;
+    }
+    .alert.success {
+      display: flex;
+      gap: 10px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #6EE7B7;
+    }
+    .alert.hidden { display: none !important; }
+
+    /* ── Primary Submit Button with 3D Elevation ── */
+    .btn-login {
+      width: 100%;
+      padding: 15px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+      color: #fff;
+      font-size: 0.98rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 8px 24px var(--accent-glow), inset 0 1px 1px rgba(255,255,255,0.3);
+      transition: all 0.25s var(--ease);
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+    .btn-login::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      transform: skewX(-20deg);
+      transition: left 0.75s ease;
+    }
+    .btn-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(37, 99, 235, 0.5);
+    }
+    .btn-login:hover::before {
+      left: 180%;
+    }
+    .btn-login:active {
+      transform: scale(0.98);
+    }
+    .btn-login:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2.5px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .btn-login.loading .spinner { display: block; }
+    .btn-login.loading .btn-text { display: none; }
+
+    /* Biometric Login Button */
+    .btn-biometric {
+      width: 100%;
+      padding: 13px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #93C5FD;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-top: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s var(--ease);
+    }
+    .btn-biometric:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(59, 130, 246, 0.4);
+      color: #fff;
+    }
+
+    /* ── Footer Switch ── */
+    .auth-footer {
+      text-align: center;
+      margin-top: 26px;
+      font-size: 0.85rem;
+      color: var(--text-2);
+    }
+    .auth-footer a {
+      color: #60A5FA;
+      text-decoration: none;
+      font-weight: 700;
+      transition: color 0.2s;
+    }
+    .auth-footer a:hover {
+      color: #93C5FD;
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .portal-shell {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        padding: 20px 16px;
+      }
+      .showcase-pane {
+        align-items: center;
+        text-align: center;
+      }
+      .brand-top { justify-content: center; }
+      .feature-pills-row { justify-content: center; }
+      .showcase-hero-title { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Light Orbs -->
+  <div class="ambient-canvas" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+  <div class="ambient-grid" aria-hidden="true"></div>
+
+  <!-- Main Split Shell -->
+  <div class="portal-shell">
+
+    <!-- Left: Showcase & Interactive 3D Holographic Pass -->
+    <div class="showcase-pane">
+      
+      <div class="brand-top">
+        <div class="brand-logo-hex">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M2 17l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="brand-header-text">
+          <div class="brand-title">Study<span>Vault</span></div>
+          <span class="brand-caption">Advanced Academic Operating System</span>
+        </div>
+      </div>
+
+      <h1 class="showcase-hero-title">
+        The Future of <br />
+        <span class="gradient-txt">Engineering Excellence.</span>
+      </h1>
+
+      <!-- 3D Holographic Student ID Card Showcase -->
+      <div class="live-card-container" id="live-card-box">
+        <div class="hologram-card" id="hologram-card">
+          <div class="card-glare" id="card-glare"></div>
+
+          <div class="card-top-row">
+            <div class="card-chip"></div>
+            <span class="card-type-badge">ACADEMIC PASS • LIVE</span>
+          </div>
+
+          <div class="card-center-row">
+            <div class="card-avatar-ring">
+              <div class="card-avatar-inner">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                  <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                </svg>
+              </div>
+            </div>
+            <div class="card-user-info">
+              <span class="card-student-name">Verified Scholar</span>
+              <span class="card-student-role">COMPUTER SCIENCE &amp; ENGINEERING</span>
+            </div>
+          </div>
+
+          <div class="card-bottom-row">
+            <div>
+              <span style="font-size:0.65rem; color:var(--text-3); text-transform:uppercase; letter-spacing:0.08em; display:block;">Authorization</span>
+              <span class="card-signature">StudyVault Portal</span>
+            </div>
+            <div style="text-align:right;">
+              <span style="font-size:0.65rem; color:var(--text-3); text-transform:uppercase; letter-spacing:0.08em; display:block;">Pass ID</span>
+              <span class="card-id-code">26•KPB•2431</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature Pills with Vector Icons -->
+      <div class="feature-pills-row">
+        <div class="feat-pill">
+          <svg class="feat-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          Real-Time Exams
+        </div>
+        <div class="feat-pill">
+          <svg class="feat-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+          10+ Core Subjects
+        </div>
+        <div class="feat-pill">
+          <svg class="feat-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+          Daily DSA Simulator
+        </div>
+        <div class="feat-pill">
+          <svg class="feat-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          Encrypted Session
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right: Frosted 3D Glass Sign-In Form -->
+    <div class="auth-pane">
+      <div class="login-3d-card" id="auth-card">
+
+        <div class="auth-header">
+          <div class="auth-badge">
+            <span class="pulse-dot-amber"></span>
+            <span>SECURE GATEWAY v2.5</span>
+          </div>
+          <h2 class="auth-title" id="auth-title-text">Welcome Back</h2>
+          <p class="auth-sub" id="auth-sub-text">Enter your credentials to access your study portal.</p>
+        </div>
+
+        <form id="login-form" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="email-input">Email Address</label>
+            <div class="input-box">
+              <svg class="input-icon-left" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2z" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M22 6l-10 7L2 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+              <input
+                type="email"
+                id="email-input"
+                placeholder="your.email@domain.com"
+                autocomplete="email"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="password-input">Password</label>
+            <div class="input-box">
+              <svg class="input-icon-left" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+              <input
+                type="password"
+                id="password-input"
+                placeholder="••••••••••••"
+                autocomplete="current-password"
+                required
+              />
+              <button type="button" class="pw-toggle" id="pw-toggle" aria-label="Toggle password visibility">
+                <svg id="eye-open" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="1.8"/>
+                  <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/>
+                </svg>
+                <svg id="eye-closed" width="18" height="18" viewBox="0 0 24 24" fill="none" style="display:none">
+                  <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  <line x1="1" y1="1" x2="23" y2="23" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Alert message -->
+          <div class="alert hidden" id="login-alert" role="alert" aria-live="polite"></div>
+
+          <button type="submit" class="btn-login" id="login-btn">
+            <div class="spinner" id="login-spinner"></div>
+            <span class="btn-text" id="btn-text-main">Enter StudyVault</span>
+            <span style="font-size: 1.1rem; line-height: 1;">→</span>
+          </button>
+
+          <button type="button" class="btn-biometric" id="biometric-login-btn" style="display: none;" onclick="loginWithBiometrics()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 0 0-10 10c0 5.523 4.477 10 10 10s10-4.477 10-10A10 10 0 0 0 12 2z"></path><path d="M12 6a6 6 0 0 0-6 6c0 1.5.5 3 1.5 4"></path><path d="M12 10a2 2 0 0 0-2 2c0 2 1 3 2 4"></path></svg>
+            <span>Authenticate with Biometrics</span>
+          </button>
+        </form>
+
+        <div class="auth-footer">
+          <p id="toggle-text">Need to establish credentials? <a href="#" id="toggle-mode">Create Account</a></p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script type="module">
+    import { supabase, signIn, signUp, getCurrentUser } from './supabase.js';
+
+    let isSignUp = false;
+
+    /* ── Check Session ── */
+    getCurrentUser().then(user => {
+      if (user) window.location.href = 'index.html';
+    });
+
+    /* ── Interactive 3D Tilt Effect on Live Holographic Card ── */
+    const cardBox = document.getElementById('live-card-box');
+    const card = document.getElementById('hologram-card');
+    const glare = document.getElementById('card-glare');
+
+    if (cardBox && card) {
+      cardBox.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = ((y - centerY) / centerY) * -14;
+        const rotateY = ((x - centerX) / centerX) * 14;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`;
+
+        if (glare) {
+          glare.style.setProperty('--mouse-x', `${(x / rect.width) * 100}%`);
+          glare.style.setProperty('--mouse-y', `${(y / rect.height) * 100}%`);
+          glare.style.opacity = '1';
+        }
+      });
+
+      cardBox.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+        if (glare) glare.style.opacity = '0';
+      });
+    }
+
+    /* ── Interactive 3D Tilt on Auth Card ── */
+    const authCard = document.getElementById('auth-card');
+    if (authCard && window.innerWidth > 900) {
+      authCard.addEventListener('mousemove', (e) => {
+        const rect = authCard.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotX = ((y - centerY) / centerY) * -4;
+        const rotY = ((x - centerX) / centerX) * 4;
+        authCard.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+      });
+      authCard.addEventListener('mouseleave', () => {
+        authCard.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+      });
+    }
+
+    /* ── Password Visibility Toggle ── */
+    const pwInput = document.getElementById('password-input');
+    const pwToggle = document.getElementById('pw-toggle');
+    const eyeOpen = document.getElementById('eye-open');
+    const eyeClosed = document.getElementById('eye-closed');
+
+    pwToggle.addEventListener('click', () => {
+      const isText = pwInput.type === 'text';
+      pwInput.type = isText ? 'password' : 'text';
+      eyeOpen.style.display = isText ? '' : 'none';
+      eyeClosed.style.display = isText ? 'none' : '';
+    });
+
+    /* ── Biometrics Check ── */
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (window.Capacitor && window.Capacitor.isNativePlatform()) {
+        try {
+          const { NativeBiometric } = window.Capacitor.Plugins;
+          if (NativeBiometric) {
+            document.getElementById('biometric-login-btn').style.display = 'flex';
+          }
+        } catch(e) {}
+      }
+    });
+
+    window.loginWithBiometrics = async function() {
+      if (window.Capacitor && window.Capacitor.isNativePlatform()) {
+        try {
+          const { NativeBiometric } = window.Capacitor.Plugins;
+          if (!NativeBiometric) return;
+          const isAvail = await NativeBiometric.isAvailable();
+          if (isAvail.isAvailable) {
+            const creds = await NativeBiometric.getCredentials({ server: 'studyvault.auth' });
+            if (creds && creds.username && creds.password) {
+              setLoading(true);
+              const res = await signIn(creds.username, creds.password);
+              setLoading(false);
+              if (res.error) {
+                showAlert('Biometric login failed: ' + res.error.message);
+              } else {
+                showAlert('Authenticated via Biometrics! Access granted.', 'success');
+                setTimeout(() => { window.location.href = 'index.html'; }, 700);
+              }
+            }
+          }
+        } catch(e) {
+          showAlert('Fingerprint credentials not found. Please log in normally once to register.');
+        }
+      }
+    };
+
+    /* ── Toggle Sign In / Sign Up ── */
+    const toggleText = document.getElementById('toggle-text');
+    const btnText = document.getElementById('btn-text-main');
+    const authTitleText = document.getElementById('auth-title-text');
+    const authSubText = document.getElementById('auth-sub-text');
+
+    toggleText.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') {
+        e.preventDefault();
+        isSignUp = !isSignUp;
+        if (isSignUp) {
+          authTitleText.textContent = 'Establish Account';
+          authSubText.textContent = 'Join StudyVault to access notes, exams, and daily challenges.';
+          btnText.textContent = 'Register Scholar Account';
+          toggleText.innerHTML = 'Already registered? <a href="#" id="toggle-mode">Sign In</a>';
+        } else {
+          authTitleText.textContent = 'Welcome Back';
+          authSubText.textContent = 'Enter your scholar credentials to unlock your vault.';
+          btnText.textContent = 'Enter StudyVault';
+          toggleText.innerHTML = 'Need to establish credentials? <a href="#" id="toggle-mode">Create Account</a>';
+        }
+        hideAlert();
+      }
+    });
+
+    /* ── Submit Form Handler ── */
+    const form = document.getElementById('login-form');
+    const loginBtn = document.getElementById('login-btn');
+    const alertBox = document.getElementById('login-alert');
+
+    function showAlert(msg, type = 'error') {
+      alertBox.className = `alert ${type}`;
+      alertBox.innerHTML = `<span>${type === 'error' ? '⚠️' : '✓'}</span> <span>${msg}</span>`;
+    }
+    function hideAlert() {
+      alertBox.className = 'alert hidden';
+    }
+    function setLoading(on) {
+      loginBtn.disabled = on;
+      loginBtn.classList.toggle('loading', on);
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideAlert();
+
+      const email = document.getElementById('email-input').value.trim();
+      const password = document.getElementById('password-input').value;
+
+      if (!email || !password) {
+        showAlert('Please provide both institutional email and master password.');
+        return;
+      }
+
+      setLoading(true);
+
+      let res;
+      if (isSignUp) {
+        res = await signUp(email, password);
+      } else {
+        res = await signIn(email, password);
+      }
+
+      setLoading(false);
+
+      if (res.error) {
+        showAlert(res.error.message || 'Authentication error. Please check your inputs.');
+        return;
+      }
+
+      if (isSignUp) {
+        if (res.data.user && !res.data.session) {
+          showAlert('Account registered! Verification link sent to your inbox.', 'success');
+        } else {
+          if (window.Capacitor && window.Capacitor.isNativePlatform() && window.Capacitor.Plugins.NativeBiometric) {
+            try { await window.Capacitor.Plugins.NativeBiometric.setCredentials({ username: email, password: password, server: 'studyvault.auth' }); } catch(e) {}
+          }
+          showAlert('Account created! Transferring to dashboard...', 'success');
+          setTimeout(() => { window.location.href = 'index.html'; }, 700);
+        }
+      } else {
+        if (window.Capacitor && window.Capacitor.isNativePlatform() && window.Capacitor.Plugins.NativeBiometric) {
+          try { await window.Capacitor.Plugins.NativeBiometric.setCredentials({ username: email, password: password, server: 'studyvault.auth' }); } catch(e) {}
+        }
+        showAlert('Authentication verified! Loading portal...', 'success');
+        setTimeout(() => { window.location.href = 'index.html'; }, 700);
+      }
+    });
+  </script>
+</body>
+</html>
